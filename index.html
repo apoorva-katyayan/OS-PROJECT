@@ -4,77 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPU Scheduling Simulator</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <script src="app.js" type="text/javascript"></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-dark bg-primary">
-            <span class="navbar-brand mb-0 h1">
-                CPU Scheduling Simulator
-            </span>
+<body class="bg-gradient-to-br from-indigo-600 to-purple-600 min-h-screen">
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg">
+        <nav class="container mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-white tracking-tight">
+                    CPU Scheduling Simulator
+                </h1>
+                <p class="text-indigo-100 mt-2">Visualize and analyze CPU scheduling algorithms</p>
+            </div>
         </nav>
     </header>
-    <div class="container mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Process Input</h5>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <input class="form-control mb-2" type="number" min="0" id="processID" placeholder="Process ID" required>
-                            </div>
-                            <div class="col-md-3">
-                                <input class="form-control mb-2" type="number" min="0" id="arrivalTime" placeholder="Arrival Time">
-                            </div>
-                            <div class="col-md-3">
-                                <input class="form-control mb-2" type="number" min="0" id="burstTime" placeholder="Burst Time">
-                            </div>
-                            <div class="col-md-3">
-                                <input class="form-control mb-2" type="number" min="0" id="priority" placeholder="Priority (Lower = Higher)">
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-primary" id="btnAddProcess">Add Process</button>
-                            </div>
-                        </div>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Process Input Section -->
+        <div class="mb-8">
+            <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add New Process
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Process ID</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" type="number" min="0" id="processID" placeholder="Enter ID" required>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Arrival Time</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" type="number" min="0" id="arrivalTime" placeholder="Enter time">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Burst Time</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" type="number" min="0" id="burstTime" placeholder="Enter time">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                        <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" type="number" min="0" id="priority" placeholder="Enter priority">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center justify-center" id="btnAddProcess">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Add Process
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Process List</h5>
-                        <table class="table table-bordered" id="tblProcessList">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Process ID</th>
-                                    <th scope="col">Arrival Time</th>
-                                    <th scope="col">Burst Time</th>
-                                    <th scope="col">Priority</th>
-                                    <th scope="col">Actions</th>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Process List Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Process List
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse" id="tblProcessList">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Process ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Burst Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody class="divide-y divide-gray-200"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Scheduling Options</h5>
-                        <div class="form-group">
-                            <label for="algorithmSelector">Select Algorithm</label>
-                            <select class="form-control" id="algorithmSelector">
+
+            <!-- Scheduling Options Section -->
+            <div>
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Scheduling Options
+                    </h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Algorithm</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" id="algorithmSelector">
                                 <option value="optFCFS">First Come First Served</option>
                                 <option value="optSJF">Shortest Job First</option>
                                 <option value="optSRTF">Shortest Remaining Time First</option>
@@ -82,92 +107,101 @@
                                 <option value="optPriority">Priority Scheduling</option>
                             </select>
                         </div>
-                        <div class="form-group form-group-time-quantum">
-                            <label>Time Quantum</label>
-                            <input class="form-control" type="number" min="1" id="timeQuantum" value="2">
+                        <div class="form-group-time-quantum hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Time Quantum</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" type="number" min="1" id="timeQuantum" value="2">
                         </div>
-                        <button class="btn btn-success btn-block" id="btnCalculate">Calculate Schedule</button>
-                        <button class="btn btn-danger btn-block mt-2" id="btnReset">Reset</button>
+                        <div class="space-y-3">
+                            <button class="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors flex items-center justify-center" id="btnCalculate">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                Calculate Schedule
+                            </button>
+                            <button class="w-full px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors flex items-center justify-center" id="btnReset">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gantt Chart</h5>
-                        <div id="ganttChart" class="gantt-chart"></div>
-                    </div>
-                </div>
+        <!-- Gantt Chart Section -->
+        <div class="mt-8">
+            <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    Gantt Chart
+                </h2>
+                <div id="ganttChart" class="gantt-chart bg-gray-50 rounded-lg p-4"></div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Results</h5>
-                        <table class="table table-bordered" id="tblResults">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Process ID</th>
-                                    <th scope="col">Arrival Time</th>
-                                    <th scope="col">Burst Time</th>
-                                    <th scope="col">Priority</th>
-                                    <th scope="col">Completed Time</th>
-                                    <th scope="col">Waiting Time</th>
-                                    <th scope="col">Turnaround Time</th>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+            <!-- Results Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Results
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse" id="tblResults">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Process ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Burst Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Completed Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waiting Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Turnaround Time</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody class="divide-y divide-gray-200"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Performance Metrics</h5>
-                        <div class="form-group">
-                            <label>Average Turnaround Time</label>
-                            <input class="form-control" id="avgTurnaroundTime" type="number" placeholder="0" disabled>
+
+            <!-- Performance Metrics Section -->
+            <div>
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Performance Metrics
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Average Turnaround Time</label>
+                            <input class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700" id="avgTurnaroundTime" type="number" placeholder="0" disabled>
                         </div>
-                        <div class="form-group">
-                            <label>Average Waiting Time</label>
-                            <input class="form-control" id="avgWaitingTime" type="number" placeholder="0" disabled>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Average Waiting Time</label>
+                            <input class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700" id="avgWaitingTime" type="number" placeholder="0" disabled>
                         </div>
-                        <div class="form-group">
-                            <label>Throughput</label>
-                            <input class="form-control" id="throughput" type="number" placeholder="0" disabled>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Throughput</label>
+                            <input class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700" id="throughput" type="number" placeholder="0" disabled>
                         </div>
-                        <div class="form-group">
-                            <label>CPU Utilization</label>
-                            <input class="form-control" id="cpuUtilization" type="number" placeholder="0" disabled>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">CPU Utilization</label>
+                            <input class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700" id="cpuUtilization" type="number" placeholder="0" disabled>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <script>
-        function isFacebookApp() {
-            var ua = navigator.userAgent || navigator.vendor || window.opera;
-            return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
-        }
-
-        function openInBrowser(target, browserScheme) {
-            var ifc = document.createElement("div");
-            ifc.innerHTML = `<iframe src='${browserScheme}${target}' style='width:0;height:0;border:0; border:none;visibility: hidden;'></iframe>`;
-            document.body.appendChild(ifc);
-        }
-        if(isFacebookApp()){
-            
-            openInBrowser(window.location.href, "googlechrome://navigate?url=");
-        }
-    </script>
-    
+    </main>
 </body>
 </html>
